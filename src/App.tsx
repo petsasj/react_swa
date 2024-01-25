@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import reactLogo from "./assets/react.svg";
 
 import "./App.css";
-import getGeoCode from "./httpRequests/getGeoCode";
-import getCurrentWeather from "./httpRequests/getCurrentWeather";
 import getResponse from "./httpRequests/getMockApiData";
 
 type CityData = {
@@ -60,29 +58,20 @@ function App() {
   const [cityData, setCityData] = useState<CityData | null>(null);
 
   useEffect(() => {
-    getGeoCode(city)
-      .then((geoRes) => {
-        // console.log('Geo code Res', geoRes)
-        if (geoRes.status === 200) {
-          getResponse()
-            .then((res) => {
-              // // console.log('Current Weather RES', res)
-              // if (res.status === 200) {
-              //   setCityData({ ...res.data, name: city });
-              // }
-              console.log('MockData', res)
-              if (res.status === 200) {
-                city = res.data;
-              }
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    getResponse()
+    .then((res) => {
+      // // console.log('Current Weather RES', res)
+      // if (res.status === 200) {
+      //   setCityData({ ...res.data, name: city });
+      // }
+      console.log('MockData', res)
+      if (res.status === 200) {
+        city = res.data;
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }, []);
 
   return (
