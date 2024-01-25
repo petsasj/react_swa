@@ -4,6 +4,7 @@ import reactLogo from "./assets/react.svg";
 import "./App.css";
 import getGeoCode from "./httpRequests/getGeoCode";
 import getCurrentWeather from "./httpRequests/getCurrentWeather";
+import getResponse from "./httpRequests/getMockApiData";
 
 type CityData = {
   coord: {
@@ -55,7 +56,7 @@ type CityData = {
   cod: number;
 };
 function App() {
-  const city = "Paris";
+  let city = "Paris";
   const [cityData, setCityData] = useState<CityData | null>(null);
 
   useEffect(() => {
@@ -63,11 +64,15 @@ function App() {
       .then((geoRes) => {
         // console.log('Geo code Res', geoRes)
         if (geoRes.status === 200) {
-          getCurrentWeather(geoRes.data[0].lat, geoRes.data[0].lon)
+          getResponse()
             .then((res) => {
-              // console.log('Current Weather RES', res)
+              // // console.log('Current Weather RES', res)
+              // if (res.status === 200) {
+              //   setCityData({ ...res.data, name: city });
+              // }
+              console.log('MockData', res)
               if (res.status === 200) {
-                setCityData({ ...res.data, name: city });
+                city = res.data;
               }
             })
             .catch(function (error) {
@@ -89,7 +94,7 @@ function App() {
       </div>
       <h1>Welcome to my React World!</h1>
       <h3>{city}</h3>
-      {cityData && <h2>{`${Math.round(cityData.main.temp)}°C`}</h2>}
+      {/* {cityData && <h2>{`${Math.round(cityData.main.temp)}°C`}</h2>} */}
     </>
   );
 }
