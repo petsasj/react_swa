@@ -3,6 +3,7 @@ import reactLogo from "./assets/react.svg";
 
 import "./App.css";
 import getResponse from "./httpRequests/getMockApiData";
+import getMock from "./httpRequests/getMockApi";
 
 // type CityData = {
 //   coord: {
@@ -59,6 +60,22 @@ function App() {
 
   useEffect(() => {
     getResponse()
+    .then((res) => {
+      // // console.log('Current Weather RES', res)
+      // if (res.status === 200) {
+      //   setCityData({ ...res.data, name: city });
+      // }
+      console.log('MockData', res)
+      if (res.status === 200) {
+        city = res.data;
+        console.log(res.data);
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+    getMock()
     .then((res) => {
       // // console.log('Current Weather RES', res)
       // if (res.status === 200) {
